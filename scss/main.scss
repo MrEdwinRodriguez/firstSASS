@@ -1,6 +1,17 @@
-//import partials
-@import "variables";
-@import "mixins";
+//import partials.  Allows code to be more moduler.
+//if in a different folder, make sure the path is correct
+@import "partials/variables";
+@import "partials/mixins";
+
+@include google-font("Alegreya+Sans");
+@include google-font('Titillium+Web');
+
+
+// CSS import methods
+// @import url();
+// @import "http://";
+// @import "filename.css";
+// @import "sylte-screen" screen;
 
 // mixing being used globally
 @include fancy-links;
@@ -8,6 +19,11 @@
 body {
   font-family: $text-font;
   color: $text-color;
+
+  @include large-screens {
+		font-size: 125%;
+
+  }
 }
 
 h1, h2, h3, h4 {
@@ -30,6 +46,13 @@ a {
 	@include warning;
 	padding: 8px 12px;
 }
+
+@include apply-to-ie-6 {
+	body{
+		font-size:125%;
+	}
+}
+
 
 #header {
 	//if you are only going to used one variable
@@ -58,6 +81,10 @@ a {
 
 #main {
 	width: $content-width;
+	@include large-screens {
+		width: auto;
+		max-width: $content-width;
+	}
 	margin-left: auto;
 	margin-right: auto;
 
