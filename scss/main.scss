@@ -1,7 +1,9 @@
 //import partials.  Allows code to be more moduler.
 //if in a different folder, make sure the path is correct
+@import "partials/functions";
 @import "partials/variables";
 @import "partials/mixins";
+
 
 @include google-font("Alegreya+Sans");
 @include google-font('Titillium+Web');
@@ -16,9 +18,25 @@
 // mixing being used globally
 @include fancy-links;
 
+.error{
+	color: red;
+}
+
+.critical-error {
+	//carries over .error
+	@extend .error;
+	bottom: 1px solid red;
+	font-weight: bold;
+}
+
 body {
   font-family: $text-font;
   color: $text-color;
+  font-size: em(18px);
+  // rgb and hsl are build in functions of CSS and SASS
+  color: rgb(10, 15, 50);
+  background-color: hsl(60, 50%, 100%);
+
 
   @include large-screens {
 		font-size: 125%;
@@ -40,6 +58,24 @@ p {
 
 a {
 	color: $link-color;
+
+	//use '&' to reference the parent selector
+	&:hover{
+		//darken funciton, takes in color, and darens by pertentage
+		color: darken($link-color, 15%);
+	}
+}
+
+%highlight{
+	font-style: italic;
+}
+
+.sub-title{
+	@extend %highlight;
+	//the !optional extends the selector if it exist only, but if it doesnt
+	//it will continue and just ignore it.
+	@extend .foo !optional;
+	font-size: em(20px);
 }
 
 .warning-button{
@@ -52,6 +88,15 @@ a {
 		font-size:125%;
 	}
 }
+
+.cta-button{
+	//you can also have multiple @extends in the same selector
+	//takes on the vaues of .warning-button 
+	@extend .warning-button;
+	@include rounded;
+	font-weight: bold;
+}
+
 
 
 #header {
@@ -70,6 +115,14 @@ a {
 
   	a{
   		color: $menu-item-color;
+  		padding: 6px, 8px;
+  		border-bottom: 1px solid transparentize(#fefefe, 1);
+  		transition: border-bottom .75s;
+  		transition-timing-function: ease-in-out;
+
+  		&:hover{
+			border-bottom: 1px solid opacify(#fefefe, .5);
+  		}
   	}
 
   }
@@ -89,13 +142,28 @@ a {
 	margin-right: auto;
 
   #content {
+  	float: left;
+  	width: 6*$col;
   }
 
   #sidebar {
+  	float: right;
+  	width: 2*$col;
+
+ 	li{
+ 		list-style-type: none;
+ 		padding: em(16px) em(20px);
+ 		border-bottom: 1px dashed #999;
+
+ 		&:hover{
+ 			background-color: #efefef;
+ 		}
+ 	}
   }
 }
 
 #footer {
+clear: both;
 height: $footer-height;
 background-color: $ternary-color;
 }

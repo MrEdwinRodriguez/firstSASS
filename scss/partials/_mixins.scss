@@ -30,6 +30,10 @@
 @mixin warning{
 	background-color: orange;
 	color: white;
+
+	&:hover{
+		background-color: lighten(orange, 10%);
+	}
 }
 
 //... allows you to pass as many values as you want.
